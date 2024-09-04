@@ -94,3 +94,19 @@ modelBuilder.ApplyConfigurationsFromAssembly(typeof(ProductConfiguration).Assemb
 # For creation postman request look at example CourseAssets\postman\SkiNet.postman_collection.json
 
 # initialize git
+
+#### Repository ###
+# in Core -> interfaces -> IProductRepository.cs
+# Infrastructure -> Data -> ProductRepository.cs
+
+# Add repository to the services in Programm.cs
+
+# remove StoreContext injection from ProductsController if exists
+# add IProductRepository injection instead
+
+# Seeding
+# Add seed data to Infrastructure -> Data -> SeedData
+# Add StoreContextSeed class to Infrastructure -> Data
+# In Programm add seeding code
+# drom database if needed
+# rerun app and see if DB has been created
