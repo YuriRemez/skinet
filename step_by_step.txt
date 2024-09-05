@@ -110,3 +110,8 @@ modelBuilder.ApplyConfigurationsFromAssembly(typeof(ProductConfiguration).Assemb
 # In Programm add seeding code
 # drom database if needed
 # rerun app and see if DB has been created
+
+# Add methods to IProductRepository:
+GetBrandsAsync
+GetTypesAsync
+# Implement in ProductRepository

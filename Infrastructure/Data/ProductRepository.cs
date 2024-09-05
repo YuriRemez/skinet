@@ -1,6 +1,8 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Sockets;
+using System.Security.Cryptography;
 using System.Threading.Tasks;
 using Core.Entities;
 using Core.Interfaces;
@@ -21,14 +23,43 @@ public class ProductRepository(StoreContext context) : IProductRepository
         context.Remove(product);
     }
 
+    public async Task<IReadOnlyList<string>> GetBrandsAsync()
+    {
+        return await context.Products.Select(p => p.Brand)
+            .Distinct()
+            .ToListAsync();
+    }
+
     public async Task<Product?> GetProductByIdAsync(int id)
     {
         return await context.Products.FindAsync(id);
     }
 
-    public async Task<IReadOnlyList<Product>> GetProductsAsync()
+    public async Task<IReadOnlyList<Product>> GetProductsAsync(string? type, string? brand, string? sort)
     {
-        return await context.Products.ToListAsync();
+        var query = context.Products.AsQueryable();
+
+        if (!string.IsNullOrWhiteSpace(brand))
+            query = query.Where(p => p.Brand == brand);
+
+        if (!string.IsNullOrWhiteSpace(type))
+            query = query.Where(p => p.Type == type);
+
+        query = sort switch
+        {
+            "priceAsc" => query.OrderBy(p => p.Price),
+            "priceDesc" => query.OrderByDescending(p => p.Price),
+            _ => query.OrderBy(p => p.Name)
+        };
+
+        return await query.ToListAsync();
+    }
+
+    public async Task<IReadOnlyList<string>> GetTypesAsync()
+    {
+        return await context.Products.Select(p => p.Type)
+            .Distinct()
+            .ToListAsync();
     }
 
     public bool ProductExists(int id)
