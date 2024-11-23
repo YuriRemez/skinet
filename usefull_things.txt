@@ -18,3 +18,7 @@ prop -> enter  # will create property tamplate inside a calss
 > dotnet ef database update -s API -p Infrastructure
 # remove database
 > dotnet ef database drop -s API -p Infrastructure
+
+################## Docker ###############
+# run container
+> docker compose up -d

@@ -115,3 +115,7 @@ modelBuilder.ApplyConfigurationsFromAssembly(typeof(ProductConfiguration).Assemb
 GetBrandsAsync
 GetTypesAsync
 # Implement in ProductRepository
+
+# Add IGengericRepository to Core->interfaces
+# Add GeneticRepository in Infrastructure->Data
+# Add these two to services in Programm
